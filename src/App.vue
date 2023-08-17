@@ -1,26 +1,67 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Houses</h1>
+  <div id="listings">
+    <HouseListing :responseData="responseData"/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HouseListing from './components/HouseListing.vue'
+import House from './models/House.js'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HouseListing
+  },
+  data() {
+    return {
+      responseData: []
+    };
+  },
+  methods: {
+    async getHouseListings() {
+      const apikey = 'qMjVn2QEhdDCeO95Lk1wHcI7FU3gJomG'; 
+
+      try {
+        const response = await fetch('https://api.intern.d-tt.nl/api/houses', {
+          headers: {
+            'X-Api-Key': apikey
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+
+          for(const el of data) {
+            // process the data into separate house objects
+            const house = new House(el.image, el.location.street, el.price, el.location.zip, el.location.city, el.rooms.bedrooms, el.rooms.bathrooms, el.size);
+            this.responseData.push(house);
+          }
+        } else {
+          console.error(response.statusText);
+        }
+      }
+      catch (e) {
+        // Handle error
+        console.log(e);
+      }
+    }
+  },
+  created() {
+    this.getHouseListings();
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #F6F6F6;
 }
 </style>
