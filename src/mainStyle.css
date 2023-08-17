@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background-color: #F6F6F6;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.listing-info {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.body-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.input-field {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.el-primary {
+  background-color: #EB5440;
+}
+
+.el-secondary {
+  background-color: #4A4B4C;
+}
+
+.el-tertiary {
+  background-color: #E8E8E8;
+}
+
+.el-tertiary-other {
+  background-color: #C3C3C3;
+}
+
+.el-bg-one {
+  background-color: #F6F6F6;
+}
+
+.el-bg-two {
+  background-color: #FFF;
+}
+
+.txt-primary {
+  color: #000;
+}
+
+.txt-secondary {
+  color: #4A4B4C;
+}
+
+.txt-hyperlink {
+  color: #067BC2;
+}
