@@ -1,7 +1,10 @@
 <template>
-  <h1>Houses</h1>
-  <div id="listings">
-    <HouseListing :responseData="responseData"/>
+  <div id="main-content">
+    <h1>Houses</h1>
+    <br>
+    <div id="listings">
+      <HouseListing :responseData="responseData"/>
+    </div>
   </div>
 </template>
 
@@ -56,12 +59,10 @@ export default {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
+#main-content {
+  margin: 100px 250px 50px 250px;
 }
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #F6F6F6;
+#listings {
+  margin-top: 30px;
 }
 </style>
