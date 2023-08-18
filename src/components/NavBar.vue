@@ -1,8 +1,8 @@
 <template>
   <nav id="nav-bar">
     <img src="../assets/img_logo_dtt@3x.png" alt="DTT logo" class="nav-bar-el align" id="dtt-logo"> 
-    <a href="/houses" class="nav-bar-el align" onclick="toggleActive()">Houses</a>
-    <a href="/about" class="nav-bar-el align" onclick="toggleActive()">About</a>
+    <a href="/houses" class="nav-bar-el header-menu align" onclick="toggleActive()">Houses</a>
+    <a href="/about" class="nav-bar-el header-menu align" onclick="toggleActive()">About</a>
   </nav>
 </template>
 
