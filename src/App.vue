@@ -1,4 +1,5 @@
 <template>
+  <NavBar/>
   <div id="main-content">
     <h1>Houses</h1>
     <br>
@@ -9,12 +10,14 @@
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue'
 import HouseListing from './components/HouseListing.vue'
 import House from './models/House.js'
 
 export default {
   name: 'App',
   components: {
+    NavBar
     HouseListing
   },
   data() {
