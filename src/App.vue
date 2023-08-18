@@ -17,7 +17,7 @@ import House from './models/House.js'
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
     HouseListing
   },
   data() {
