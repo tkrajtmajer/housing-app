@@ -7,6 +7,9 @@
     <div id="listings">
       <HouseListing :responseData="queriedData"/>
     </div>
+    <div v-if="noResults">
+      <EmptySearch/>
+    </div>
   </div>
 </template>
 
@@ -14,6 +17,7 @@
 import NavBar from './components/NavBar.vue'
 import HouseListing from './components/HouseListing.vue'
 import SearchBar from './components/SearchBar.vue'
+import EmptySearch from './components/EmptySearch.vue'
 import House from './models/House.js'
 
 export default {
@@ -21,7 +25,8 @@ export default {
   components: {
     NavBar,
     HouseListing,
-    SearchBar
+    SearchBar,
+    EmptySearch
   },
   data() {
     return {
@@ -76,6 +81,12 @@ export default {
             house.size.toString().includes(query.toLowerCase()) 
           );
         });
+      }
+
+      if (this.queriedData.length === 0) {
+        this.noResults = true;
+      } else {
+        this.noResults = false;
       }
     }
   },
