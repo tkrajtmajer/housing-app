@@ -2,8 +2,12 @@
   <NavBar/>
   <div id="main-content">
     <h1>Houses</h1>
-    <br>
-    <SearchBar @newSearch="handleSearch"/>
+    <br><br>
+    <SearchBar @newSearch="handleSearch" @updateResultsCount="updateCounter"/>
+    <div v-if="updateNrResults && !noResults">
+      <br><br>
+      <h2><span id="nrResults">{{ queriedData.length }}</span> results found</h2>
+    </div>
     <div id="listings">
       <HouseListing :responseData="queriedData"/>
     </div>
@@ -31,7 +35,8 @@ export default {
   data() {
     return {
       responseData: [],
-      queriedData: []
+      queriedData: [],
+      updateNrResults: false
     };
   },
   methods: {
@@ -88,6 +93,9 @@ export default {
       } else {
         this.noResults = false;
       }
+    },
+    updateCounter(flag) {
+      this.updateNrResults = flag;
     }
   },
   created() {

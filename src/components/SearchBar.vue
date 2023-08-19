@@ -11,13 +11,21 @@ export default {
   name: 'SearchBar',
   methods: {
     searchWithKeyword() {
-      this.$emit('newSearch', document.getElementById('input-field').value);
+      if(document.getElementById('input-field').value !== '') {
+        this.$emit('newSearch', document.getElementById('input-field').value);
+        this.$emit('updateResultsCount', true);
+      }
     },
     handleInput(query) {
-      this.$emit('newSearch', query);
+      if(query !== '') {
+        this.$emit('newSearch', query);
+        this.$emit('updateResultsCount', true);
+      }
     },
     clearInput() {
       document.getElementById('input-field').value = '';
+      this.$emit('newSearch', '');
+      this.$emit('updateResultsCount', false);
     }
   }
 }
