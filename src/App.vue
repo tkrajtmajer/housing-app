@@ -2,9 +2,17 @@
   <NavBar/>
   <div id="main-content">
     <h1>Houses</h1>
-    <br>
+    <br><br>
+    <SearchBar @newSearch="handleSearch" @updateResultsCount="updateCounter"/>
+    <div v-if="updateNrResults && !noResults">
+      <br><br>
+      <h2><span id="nrResults">{{ queriedData.length }}</span> results found</h2>
+    </div>
     <div id="listings">
-      <HouseListing :responseData="responseData"/>
+      <HouseListing :responseData="queriedData"/>
+    </div>
+    <div v-if="noResults">
+      <EmptySearch/>
     </div>
   </div>
 </template>
@@ -12,17 +20,23 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import HouseListing from './components/HouseListing.vue'
+import SearchBar from './components/SearchBar.vue'
+import EmptySearch from './components/EmptySearch.vue'
 import House from './models/House.js'
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    HouseListing
+    HouseListing,
+    SearchBar,
+    EmptySearch
   },
   data() {
     return {
-      responseData: []
+      responseData: [],
+      queriedData: [],
+      updateNrResults: false
     };
   },
   methods: {
@@ -38,7 +52,6 @@ export default {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
 
           for(const el of data) {
             // process the data into separate house objects
@@ -53,17 +66,48 @@ export default {
         // Handle error
         console.log(e);
       }
+    },
+    handleSearch(query) {
+      this.queriedData = [];
+      
+      if(query === '') {
+        this.queriedData = this.responseData;
+      }
+      else if(query === undefined) {
+        throw new Error( "undefined query");
+      }
+      else {
+        this.queriedData = this.responseData.filter(house => {
+          return (
+            house.address.toLowerCase().includes(query.toLowerCase()) ||
+            house.price.toString().includes(query.toLowerCase()) || 
+            house.postcode.toLowerCase().includes(query.toLowerCase()) || 
+            house.city.toLowerCase().includes(query.toLowerCase()) ||
+            house.size.toString().includes(query.toLowerCase()) 
+          );
+        });
+      }
+
+      if (this.queriedData.length === 0) {
+        this.noResults = true;
+      } else {
+        this.noResults = false;
+      }
+    },
+    updateCounter(flag) {
+      this.updateNrResults = flag;
     }
   },
   created() {
     this.getHouseListings();
+    this.queriedData = this.responseData;
   }
 }
 </script>
 
 <style>
 #main-content {
-  margin: 100px 250px 50px 250px;
+  margin: 150px 250px 50px 250px;
 }
 #listings {
   margin-top: 30px;

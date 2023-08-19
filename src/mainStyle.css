@@ -19,25 +19,25 @@ h2 {
   font-weight: 700;
 }
 
-.header-menu {
+.font-header-menu {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 400;
 }
 
-.listing-info {
+.font-listing-info {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 600;
 }
 
-.body-text {
+.font-body-text {
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   font-weight: 400;
 }
 
-.input-field {
+.font-input-field {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -77,4 +77,8 @@ h2 {
 
 .txt-hyperlink {
   color: #067BC2;
+}
+
+.align {
+  vertical-align: middle;
 }

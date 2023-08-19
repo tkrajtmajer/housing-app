@@ -3,7 +3,7 @@
     <div id="house-image">
       <img src="../assets/img_placeholder_house@3x.png" alt="House image">
     </div>
-    <div id="house-info" class="body-text">
+    <div id="house-info" class="font-body-text">
       <div id="address"><h2>{{ data.address }}</h2></div>
       <div id="price">&euro; {{ data.price }}</div>
       <div id="location-data" class="txt-secondary">
@@ -77,8 +77,5 @@ export default {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-}
-.align {
-  vertical-align: middle;
 }
 </style>
