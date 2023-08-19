@@ -69,7 +69,7 @@ export default {
         this.queriedData = this.responseData;
       }
       else if(query === undefined) {
-        throw new Error( "e jbg :(");
+        throw new Error( "undefined query");
       }
       else {
         this.queriedData = this.responseData.filter(house => {
