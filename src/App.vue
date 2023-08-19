@@ -3,7 +3,10 @@
   <div id="main-content">
     <h1>Houses</h1>
     <br><br>
-    <SearchBar @newSearch="handleSearch" @updateResultsCount="updateCounter"/>
+    <div class="vertical-section">
+      <SearchBar @newSearch="handleSearch" @updateResultsCount="updateCounter"/>
+      <SortOptions @sortByOption="sortByOption"/>
+    </div>
     <div v-if="updateNrResults && !noResults">
       <br><br>
       <h2><span id="nrResults">{{ queriedData.length }}</span> results found</h2>
@@ -22,6 +25,7 @@ import NavBar from './components/NavBar.vue'
 import HouseListing from './components/HouseListing.vue'
 import SearchBar from './components/SearchBar.vue'
 import EmptySearch from './components/EmptySearch.vue'
+import SortOptions from './components/SortOptions.vue'
 import House from './models/House.js'
 
 export default {
@@ -30,7 +34,8 @@ export default {
     NavBar,
     HouseListing,
     SearchBar,
-    EmptySearch
+    EmptySearch,
+    SortOptions
   },
   data() {
     return {
@@ -96,6 +101,15 @@ export default {
     },
     updateCounter(flag) {
       this.updateNrResults = flag;
+    },
+    sortByOption({option, order}) {
+      console.log('iz maina ', option, order);
+      if(option === 'price') {
+        this.queriedData.sort((a, b) => (a.price - b.price) * order);
+      }
+      else {
+        this.queriedData.sort((a, b) => (a.size - b.size) * order);
+      }
     }
   },
   created() {
@@ -111,5 +125,9 @@ export default {
 }
 #listings {
   margin-top: 30px;
+}
+.vertical-section {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
