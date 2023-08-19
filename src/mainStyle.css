@@ -19,6 +19,12 @@ h2 {
   font-weight: 700;
 }
 
+.font-input-field-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .font-header-menu {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
@@ -45,6 +51,7 @@ h2 {
 
 .el-primary {
   background-color: #EB5440;
+  color: #F6F6F6;
 }
 
 .el-secondary {
@@ -57,6 +64,7 @@ h2 {
 
 .el-tertiary-other {
   background-color: #C3C3C3;
+  color: #F6F6F6;
 }
 
 .el-bg-one {
@@ -83,10 +91,9 @@ h2 {
   vertical-align: middle;
 }
 
-.button-plain {
+.button-basic {
   margin: 0;
   padding: 0;
   border: none;
-  background: none;
   cursor: pointer;
 }

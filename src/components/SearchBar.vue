@@ -1,8 +1,8 @@
 <template>
   <div id="search-bar" class="el-tertiary">
-    <button class="button-plain align" @click="searchWithKeyword"><img src="../assets/ic_search@3x.png" class="search-icon"></button>
+    <button class="button-basic align" @click="searchWithKeyword"><img src="../assets/ic_search@3x.png" class="search-icon"></button>
     <input id="input-field" class="font-input-field align el-tertiary" type="search" placeholder="Search for a house" @keydown.enter.prevent="handleInput($event.target.value)">
-    <button class="button-plain align" @click="clearInput"><img src="../assets/ic_clear@3x.png" class="search-icon"></button>
+    <button class="button-basic align" @click="clearInput"><img src="../assets/ic_clear@3x.png" class="search-icon"></button>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #search-bar {
   width: 500px;
   /* display: flex;
@@ -47,5 +47,8 @@ export default {
 .search-icon {
   width: 20px;
   padding: 2px;
+}
+.button-basic {
+  background: none;
 }
 </style>
