@@ -3,8 +3,9 @@
   <div id="main-content">
     <h1>Houses</h1>
     <br>
+    <SearchBar @newSearch="handleSearch"/>
     <div id="listings">
-      <HouseListing :responseData="responseData"/>
+      <HouseListing :responseData="queriedData"/>
     </div>
   </div>
 </template>
@@ -12,17 +13,20 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import HouseListing from './components/HouseListing.vue'
+import SearchBar from './components/SearchBar.vue'
 import House from './models/House.js'
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    HouseListing
+    HouseListing,
+    SearchBar
   },
   data() {
     return {
-      responseData: []
+      responseData: [],
+      queriedData: []
     };
   },
   methods: {
@@ -38,7 +42,6 @@ export default {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
 
           for(const el of data) {
             // process the data into separate house objects
@@ -53,17 +56,39 @@ export default {
         // Handle error
         console.log(e);
       }
+    },
+    handleSearch(query) {
+      this.queriedData = [];
+      
+      if(query === '') {
+        this.queriedData = this.responseData;
+      }
+      else if(query === undefined) {
+        throw new Error( "e jbg :(");
+      }
+      else {
+        this.queriedData = this.responseData.filter(house => {
+          return (
+            house.address.toLowerCase().includes(query.toLowerCase()) ||
+            house.price.toString().includes(query.toLowerCase()) || 
+            house.postcode.toLowerCase().includes(query.toLowerCase()) || 
+            house.city.toLowerCase().includes(query.toLowerCase()) ||
+            house.size.toString().includes(query.toLowerCase()) 
+          );
+        });
+      }
     }
   },
   created() {
     this.getHouseListings();
+    this.queriedData = this.responseData;
   }
 }
 </script>
 
 <style>
 #main-content {
-  margin: 100px 250px 50px 250px;
+  margin: 150px 250px 50px 250px;
 }
 #listings {
   margin-top: 30px;
