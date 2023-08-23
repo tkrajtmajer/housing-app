@@ -1,4 +1,5 @@
 class House {
+  id;
   image;
   address;
   price;
@@ -8,7 +9,8 @@ class House {
   nrBathrooms;
   size;
 
-  constructor(image, address, price, postcode, city, nrRooms, nrBathrooms, size) {
+  constructor(id, image, address, price, postcode, city, nrRooms, nrBathrooms, size) {
+    this.id = id;
     this.image = image;
     this.address = address;
     this.price = price;

@@ -1,7 +1,7 @@
 <template>
   <div id="sort-options">
-    <button @click="sortBy('price')" id="left" class="button-basic el-primary font-input-field-title">Price</button>
-    <button @click="sortBy('size')" id="right" class="button-basic el-tertiary-other font-input-field-title">Size</button>
+    <button @click="sortBy('price')" id="left" :class="['button-basic', 'font-input-field-title', { 'el-primary': currentOption === 'price' }, { 'el-tertiary-other': currentOption === 'size' || currentOption === '' }]">Price</button>
+    <button @click="sortBy('size')" id="right" :class="['button-basic', 'font-input-field-title', { 'el-primary': currentOption === 'size' }, { 'el-tertiary-other': currentOption === 'price' || currentOption === '' }]">Size</button>
   </div>
 </template>
 
@@ -23,7 +23,6 @@ export default {
         this.currentOrder = 1;
         this.currentOption = option;
       }
-      console.log('iz options ', this.currentOption, this.currentOrder);
       this.$emit('sortByOption', {option: this.currentOption, order: this.currentOrder});
     }
   }
