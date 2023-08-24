@@ -25,6 +25,12 @@ h2 {
   font-weight: 600;
 }
 
+.font-back-button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .font-header-menu {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
@@ -96,4 +102,10 @@ h2 {
   padding: 0;
   border: none;
   cursor: pointer;
+}
+
+.icon {
+  width: auto;
+  max-height: 18px;
+  margin-right: 10px;
 }
