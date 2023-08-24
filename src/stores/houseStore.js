@@ -32,6 +32,8 @@ export const houseStore = defineStore('houseStore', {
               el.id, 
               el.image, 
               el.location.street, 
+              el.location.houseNumber,
+              el.location.houseNumberAddition,
               el.price, 
               el.location.zip, 
               el.location.city, 
@@ -53,6 +55,48 @@ export const houseStore = defineStore('houseStore', {
         throw new GetError(error.message);
       }
     },
+    async getHouseByID(id) {
+      const apikey = process.env.VUE_APP_API_KEY;
+      const rootApi = process.env.VUE_APP_ROOT_API;
+
+      try {
+        const response = await fetch(`${rootApi}/api/houses/${id}`, {
+          headers: {
+            'X-Api-Key': apikey
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const el = data[0];
+            
+          const house = new House(
+            el.id, 
+            el.image, 
+            el.location.street, 
+            el.location.houseNumber, 
+            el.location.houseNumberAddition, 
+            el.price, 
+            el.location.zip, 
+            el.location.city, 
+            el.rooms.bedrooms, 
+            el.rooms.bathrooms, 
+            el.size,
+            el.constructionYear,
+            el.hasGarage,
+            el.description
+          );
+        
+          console.log("house in store ", house);
+          return house;
+        } else {
+          throw new GetError(response.statusText);
+        }
+      }
+      catch (error) {
+        throw new GetError(error.message);
+      }
+    },
     handleSearch(query) {
       this.queriedData = [];
     
@@ -65,7 +109,8 @@ export const houseStore = defineStore('houseStore', {
       else {
         this.queriedData = this.responseData.filter(house => {
           return (
-            house.address.toLowerCase().includes(query.toLowerCase()) ||
+            house.street.toLowerCase().includes(query.toLowerCase()) ||
+            house.houseNr.toString().includes(query.toLowerCase()) || 
             house.price.toString().includes(query.toLowerCase()) || 
             house.postcode.toLowerCase().includes(query.toLowerCase()) || 
             house.city.toLowerCase().includes(query.toLowerCase()) ||
