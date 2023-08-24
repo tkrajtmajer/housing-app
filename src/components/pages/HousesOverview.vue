@@ -10,7 +10,7 @@
     <h2><span id="nrResults">{{ this.store.getNrOfResults }}</span> results found</h2>
   </div>
   <div id="listings">
-    <HouseListing :store="store"/>
+    <HouseListing class="listing-item" v-for="(data, index) in store.queriedData" :key="index" :data="data" @listingSelected="this.$emit('listingSelected', data.id)"/>
   </div>
   <div v-if="noResults">
     <EmptySearch/>
@@ -60,5 +60,13 @@ export default {
 <style>
 #listings {
   margin-top: 30px;
+}
+.listing-item {
+  --hi-padding: 10px;
+  --li-height: 35px;
+  --image-width: 180px;
+  --image-height: 180px;
+  --font-size: 18px;
+  --font-heading: 22px;
 }
 </style>
