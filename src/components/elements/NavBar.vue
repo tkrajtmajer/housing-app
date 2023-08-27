@@ -23,6 +23,7 @@ export default {
   padding-left: 330px;
   font-size: 18px;
   vertical-align: middle;
+  z-index: 1;
 }
 #nav-bar a {
   text-decoration: none;

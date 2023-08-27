@@ -19,6 +19,12 @@ h2 {
   font-weight: 700;
 }
 
+.font-buttons {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .font-input-field-title {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
@@ -34,7 +40,14 @@ h2 {
 .font-header-menu {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
+}
+
+.font-error-message {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: italic;
 }
 
 .font-listing-info {
@@ -108,4 +121,8 @@ h2 {
   width: auto;
   max-height: 18px;
   margin-right: 10px;
+}
+
+.container {
+  padding: 150px 330px 50px 330px;
 }

@@ -19,9 +19,6 @@ export default {
 </script>
 
 <style>
-#main-content {
-  margin: 150px 330px 50px 330px;
-}
 #listings {
   margin-top: 30px;
 }
