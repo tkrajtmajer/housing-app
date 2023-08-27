@@ -1,7 +1,14 @@
 export class GetError extends Error {
   constructor(message) {
     super(message);
-    this.name = "GetterError";
+    this.name = "GetError";
+  }
+}
+
+export class PostError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "PostError";
   }
 }
 

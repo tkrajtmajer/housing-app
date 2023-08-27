@@ -13,8 +13,9 @@ class House {
   constructionYear;
   hasGarage;
   description;
+  madeByMe;
 
-  constructor(id, image, street, houseNr, houseNrAdt, price, postcode, city, nrRooms, nrBathrooms, size, constructionYear = null, hasGarage = false, description = null) {
+  constructor(id, image, street, houseNr, houseNrAdt, price, postcode, city, nrRooms, nrBathrooms, size, madeByMe, constructionYear = null, hasGarage = false, description = null) {
     this.id = id;
     this.image = image;
     this.street = street;
@@ -29,6 +30,7 @@ class House {
     this.constructionYear = constructionYear;
     this.hasGarage = hasGarage;
     this.description = description;
+    this.madeByMe = madeByMe;
   }
 }
 

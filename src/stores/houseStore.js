@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import House from '../models/House'
-import { GetError, QueryUndefinedError } from '@/common/errors';
+import { GetError, QueryUndefinedError, PostError } from '@/common/errors';
 
 export const houseStore = defineStore('houseStore', {
   state: () => ({
@@ -39,7 +39,8 @@ export const houseStore = defineStore('houseStore', {
               el.location.city, 
               el.rooms.bedrooms, 
               el.rooms.bathrooms, 
-              el.size
+              el.size,
+              el.madeByMe
             );
 
             this.responseData.push(house);
@@ -82,12 +83,12 @@ export const houseStore = defineStore('houseStore', {
             el.rooms.bedrooms, 
             el.rooms.bathrooms, 
             el.size,
+            el.madeByMe,
             el.constructionYear,
             el.hasGarage,
             el.description
           );
         
-          console.log("house in store ", house);
           return house;
         } else {
           throw new GetError(response.statusText);
@@ -125,6 +126,60 @@ export const houseStore = defineStore('houseStore', {
       }
       else {
         this.queriedData.sort((a, b) => (a.size - b.size) * order);
+      }
+    },
+    async createNewListing(listingData, imageData) {
+      const apikey = process.env.VUE_APP_API_KEY;
+      const rootApi = process.env.VUE_APP_ROOT_API;
+
+      try {
+        const response = await fetch(`${rootApi}/api/houses/`, {
+          method: 'POST',
+          headers: {
+            'X-Api-Key': apikey
+          },
+          body: listingData
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+
+          await this.uploadImage(imageData, data.id);
+          
+          return data.id;
+        } 
+        else {
+          throw new PostError(response.statusText);
+        }
+      }
+      catch (error) {
+        throw new PostError(error.message);
+      }
+    },
+    async uploadImage(imageData, houseId) {
+      const apikey = process.env.VUE_APP_API_KEY;
+      const rootApi = process.env.VUE_APP_ROOT_API;
+
+      try {
+        const response = await fetch(`${rootApi}/api/houses/${houseId}/upload`, {
+          method: 'POST',
+          headers: {
+            'X-Api-Key': apikey,
+          },
+          body: imageData,
+          redirect: 'follow',
+          mode: 'cors'
+        });
+        
+        if (response.ok) {
+          return true;
+        }
+        else {
+          throw new PostError(response.statusText);
+        }
+      }
+      catch (error) {
+        throw new PostError(error.message);
       }
     }
   }
