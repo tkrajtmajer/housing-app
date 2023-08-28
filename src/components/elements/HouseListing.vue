@@ -28,8 +28,11 @@
       </div>
     </div>
 
-    <div id="listing-options-container">
-      <div v-if="data.madeByMe === true">
+    <div v-if="data.madeByMe === true">
+      <div id="listing-options-container">
+        <button @click="this.$emit('editHouse', this.data.id)" class="button-basic">
+          <img src="../../assets/ic_edit@3x.png" class="icon-big">
+        </button>
         <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.data.id)" />
       </div>
     </div>
@@ -112,5 +115,13 @@ h2 {
 #listing-info-container {
   display: flex;
   align-content: center;
+}
+#listing-options-container {
+  display: flex;
+  gap: 15px;
+}
+.button-basic {
+  background: none;
+  float: right;
 }
 </style>

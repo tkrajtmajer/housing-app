@@ -4,9 +4,9 @@
     <div id="create-listing">
       <BackButton @backToOverview="this.$emit('backToOverview')"/>
       <br>
-      <h1>Create new listing</h1>
+      <h1>{{ this.title }}</h1>
       <br><br>
-      <form @submit.prevent="submitNewHouse">
+      <form @submit.prevent="submitNewHouse" id="form">
         <label for="street-name" class="font-input-field-title">Street name*</label><br><br>
         <input type="text" id="street-name" class="font-input-field" v-model="streetName" placeholder="Enter the street name" required @blur="checkForValidity"><br>
         <p class="font-error-message" id="street-name-error"></p><br>
@@ -82,7 +82,7 @@
         <textarea rows="5" cols="30" id="description" class="font-input-field" v-model="description" placeholder="Enter description" required @blur="checkForValidity"></textarea><br>
         <p class="font-error-message" id="description-error"></p><br>
 
-        <button type="submit" id="submit" class="el-primary font-buttons button-basic">POST</button><br><br>
+        <button type="submit" id="submit" class="el-primary font-buttons button-basic">{{ this.button }}</button><br><br>
       </form>
     </div>
   </div>
@@ -90,12 +90,13 @@
 
 <script>
 import BackButton from '../elements/BackButton.vue';
+import { onMounted } from 'vue';
 
 export default {
   components: {
     BackButton
   },
-  props: ['store'],
+  props: ['store', 'title', 'button', 'initialData'],
   data() {
     return {
       streetName: '',
@@ -113,10 +114,30 @@ export default {
       description: ''
     }
   },
+  created() {
+    if(this.initialData !== null) {
+      this.$data.streetName = this.initialData.street;
+      this.$data.houseNumber = this.initialData.houseNr;
+      this.$data.numberAddition = this.initialData.houseNrAdt;
+      this.$data.zip = this.initialData.postcode;
+      this.$data.city = this.initialData.city;
+      this.$data.image = this.initialData.image;
+      this.$data.price = this.initialData.price;
+      this.$data.size = this.initialData.size;
+      this.$data.hasGarage = this.initialData.hasGarage;
+      this.$data.bedrooms = this.initialData.nrRooms;
+      this.$data.bathrooms = this.initialData.nrBathrooms;
+      this.$data.constructionYear = this.initialData.constructionYear;
+      this.$data.description = this.initialData.description;
+    }
+
+    onMounted(() => {
+      this.showImage(this.$data.image);
+    });
+  },
   methods: {
     submitNewHouse() {
       const listingData = new FormData();
-      const imageData = new FormData();
 
       Object.keys(this.$data).forEach(key => {
         if(key !== 'image') {
@@ -124,17 +145,25 @@ export default {
         }
       });
 
-      imageData.append('image', this.$data.image, this.$data.image.name);
+      var imageData = new FormData();
+
+      if(this.$data.image instanceof File) {
+        imageData.append('image', this.$data.image, this.$data.image.name);
+      }
+      else {
+        imageData = null;
+      }
 
       this.$emit('processForm', {listingData, imageData});
     },
     handleImageUpload(event) {
-      console.log("handle upload");
       const file = event.target.files[0];
 
-      document.getElementById("uploaded-image").src = URL.createObjectURL(file);
+      this.showImage(URL.createObjectURL(file));
       this.image = file;
-
+    },
+    showImage(src) {
+      document.getElementById("uploaded-image").src = src;
       document.getElementById("icon-upload").classList.replace('container-style-icon', 'container-style-upload');
       document.getElementById("uploaded-image").classList.replace('img-style-icon', 'img-style-upload');
 
@@ -159,7 +188,6 @@ export default {
       error.innerHTML = 'Required field missing.';
     },
     checkForValidity(event) {
-      console.log('checkForValidity');
       const el = event.target;
       const error = document.getElementById(el.id + "-error");
 
@@ -179,9 +207,6 @@ export default {
           error.innerHTML = 'Invalid input.';
         }
       }
-    },
-    abort(event) {
-      console.log("abort ", event);
     }
   }
 }
@@ -250,6 +275,7 @@ textarea {
 }
 form:valid #submit {
   opacity: 1;
+  float: right;
   cursor: pointer;
   pointer-events: auto;
 }

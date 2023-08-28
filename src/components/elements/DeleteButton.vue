@@ -1,6 +1,6 @@
 <template>
   <button @click="showAlert" class="button-basic">
-    <img src="../../assets/ic_delete@3x.png" class="icon">
+    <img src="../../assets/ic_delete@3x.png" class="icon-big">
   </button>
   <div v-if="this.alertIsVisible === true">
     <DeleteAlert @confirmDeletion="deleteHouse" @cancelDeletion="hideAlert" />
@@ -40,9 +40,5 @@ export default {
 .button-basic {
   background: none;
   float: right;
-}
-.icon {
-  max-height: 25px;
-  margin-right: 0;
 }
 </style>
