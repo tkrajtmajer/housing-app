@@ -1,10 +1,10 @@
 <template>
   <div id="houses-page" >
     <div v-if="selectedHouse === null && !createNewHouse">
-      <HousesOverview :store="store" @listingSelected="showHouseDetails" @createNewListing="createNew" />
+      <HousesOverview :store="store" @listingSelected="showHouseDetails" @createNewListing="createNew" @deleteHouse="deleteHouse"/>
     </div>
     <div v-if="selectedHouse !== null && !createNewHouse">
-      <HouseDetails :store="store" :houseDetails="selectedHouse" @backToOverview="backToOverview" @listingSelected="showHouseDetails"/>
+      <HouseDetails :store="store" :houseDetails="selectedHouse" @backToOverview="backToOverview" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse"/>
     </div>
     <div v-if="createNewHouse">
       <CreateListing :store="store" @backToOverview="backToOverview" @processForm="addNewListing"/>
@@ -49,8 +49,8 @@ export default {
     },
     backToOverview() {
       this.selectedHouse = null;
-      this.store.handleSearch('');
       this.createNewHouse = false;
+      this.store.handleSearch('');
     },
     createNew() {
       this.createNewHouse = true;
@@ -59,6 +59,9 @@ export default {
       const createdId = await this.store.createNewListing(listingData, imageData);
       this.selectedHouse = await this.store.getHouseByID(createdId);
       this.createNewHouse = false;
+    },
+    deleteHouse(houseId) {
+      this.store.deleteListing(houseId);
     }
   }
 }
