@@ -9,8 +9,11 @@
           <div id="house-info" class="font-listing-info txt-secondary">
             <div id="vertical-section">
               <h1 class="txt-primary">{{ houseDetails.street }} {{ houseDetails.houseNr }} {{ houseDetails.houseNrAdt }}</h1>
-              <div id="listing-options-container" class="txt-primary">
-                <div v-if="houseDetails.madeByMe === true">
+              <div v-if="houseDetails.madeByMe === true">
+                <div id="listing-options-container" class="txt-primary">
+                  <button @click="this.$emit('editHouse', this.houseDetails.id)" class="button-basic">
+                    <img src="../../assets/ic_edit@3x.png" class="icon-big">
+                  </button>
                   <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
                 </div>
               </div>
@@ -26,11 +29,11 @@
               </div>
               <div id="info-size">
                 <img src="../../assets/ic_size@3x.png" class="icon">
-                <p id="text-size">{{ houseDetails.size }}</p>
+                <p id="text-size">{{ houseDetails.size }} m2</p>
               </div>
               <div id="info-built">
                 <img src="../../assets/ic_construction_date@3x.png" class="icon">
-                <p id="text-built">{{ houseDetails.constructionYear }}</p>
+                <p id="text-built">Built in {{ houseDetails.constructionYear }}</p>
               </div>
             </div>
           <div id="info-room-details">
@@ -134,8 +137,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 8px;
 }
 #listing-options-container {
   line-height: normal;
+  display: flex;
+  gap: 15px;
+}
+.button-basic {
+  background: none;
 }
 </style>

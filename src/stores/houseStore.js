@@ -210,6 +210,36 @@ export const houseStore = defineStore('houseStore', {
       catch (error) {
         throw new PostError(error.message);
       }
+    },
+    async editListing(houseId, listingData, imageData) {
+      const apikey = process.env.VUE_APP_API_KEY;
+      const rootApi = process.env.VUE_APP_ROOT_API;
+
+      try {
+        const response = await fetch(`${rootApi}/api/houses/${houseId}`, {
+          method: 'POST',
+          headers: {
+            'X-Api-Key': apikey
+          },
+          body: listingData
+        });
+        
+        if (response.ok) {
+          if(imageData !== null) {
+            await this.uploadImage(imageData, houseId);
+          }
+          
+          this.getHouseListings();
+          
+          return houseId;
+        } 
+        else {
+          throw new PostError(response.statusText);
+        }
+      }
+      catch (error) {
+        throw new PostError(error.message);
+      }
     }
   }
 })
