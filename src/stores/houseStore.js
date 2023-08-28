@@ -13,6 +13,9 @@ export const houseStore = defineStore('houseStore', {
   },
   actions: {
     async getHouseListings() {
+      this.responseData = [];
+      this.queriedData = [];
+
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
 
@@ -146,6 +149,8 @@ export const houseStore = defineStore('houseStore', {
 
           await this.uploadImage(imageData, data.id);
           
+          this.getHouseListings();
+          
           return data.id;
         } 
         else {
@@ -172,6 +177,30 @@ export const houseStore = defineStore('houseStore', {
         });
         
         if (response.ok) {
+          return true;
+        }
+        else {
+          throw new PostError(response.statusText);
+        }
+      }
+      catch (error) {
+        throw new PostError(error.message);
+      }
+    },
+    async deleteListing(houseId) {
+      const apikey = process.env.VUE_APP_API_KEY;
+      const rootApi = process.env.VUE_APP_ROOT_API;
+
+      try {
+        const response = await fetch(`${rootApi}/api/houses/${houseId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-Api-Key': apikey,
+          }
+        });
+        
+        if (response.ok) {
+          this.getHouseListings();
           return true;
         }
         else {
