@@ -17,7 +17,7 @@
       <h2><span id="nrResults">{{ this.store.getNrOfResults }}</span> results found</h2>
     </div>
     <div id="listings">
-      <HouseListing class="listing-item" v-for="(data, index) in store.queriedData" :key="index" :data="data" @listingSelected="this.$emit('listingSelected', data.id)"/>
+      <HouseListing class="listing-item" v-for="(data, index) in store.queriedData" :key="index" :data="data" @listingSelected="this.$emit('listingSelected', data.id)" @deleteHouse="deleteHouse"/>
     </div>
     <div v-if="noResults">
       <EmptySearch/>
@@ -60,6 +60,9 @@ export default {
     },
     updateCounter(flag) {
       this.updateNrResults = flag;
+    },
+    deleteHouse(houseId) {
+      this.store.deleteListing(houseId);
     }
   }
 }

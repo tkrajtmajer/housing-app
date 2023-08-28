@@ -1,36 +1,49 @@
 <template>
-  <div id="container" @click="this.$emit('listingSelected', data.id)">
-    <div id="house-image">
-      <img :src="data.image" alt="House image">
-    </div>
-    <div id="house-info" class="font-body-text">
-      <div id="address"><h2>{{ data.street }} {{ data.houseNr }} {{ data.houseNrAdt }}</h2></div>
-      <div id="price">&euro; {{ data.price }}</div>
-      <div id="location-data" class="txt-secondary">
-        <div id="postcode">{{ data.postcode }}</div>
-        <div id="city">{{ data.city }}</div>
+  <div id="container">
+    <div id="listing-info-container">
+      <div id="house-image">
+        <img :src="data.image" alt="House image">
       </div>
-      <div id="room-specifics" class="txt-secondary">
-        <div id="nrRooms">
-          <img src="../../assets/ic_bed@3x.png" class="icon align">
-          <span class="align">{{ data.nrRooms }}</span>
+      <div id="house-info" class="font-body-text clickable" @click="this.$emit('listingSelected', data.id)">
+        <div id="address"><h2>{{ data.street }} {{ data.houseNr }} {{ data.houseNrAdt }}</h2></div>
+        <div id="price">&euro; {{ data.price }}</div>
+        <div id="location-data" class="txt-secondary">
+          <div id="postcode">{{ data.postcode }}</div>
+          <div id="city">{{ data.city }}</div>
         </div>
-        <div id="nrBathrooms">
-          <img src="../../assets/ic_bath@3x.png" class="icon align">
-          <span class="align">{{ data.nrBathrooms }}</span>
+        <div id="room-specifics" class="txt-secondary">
+          <div id="nrRooms">
+            <img src="../../assets/ic_bed@3x.png" class="icon align">
+            <span class="align">{{ data.nrRooms }}</span>
+          </div>
+          <div id="nrBathrooms">
+            <img src="../../assets/ic_bath@3x.png" class="icon align">
+            <span class="align">{{ data.nrBathrooms }}</span>
+          </div>
+          <div id="size">
+            <img src="../../assets/ic_size@3x.png" class="icon align">
+            <span class="align">{{ data.size }} m2</span>
+          </div>
         </div>
-        <div id="size">
-          <img src="../../assets/ic_size@3x.png" class="icon align">
-          <span class="align">{{ data.size }} m2</span>
-        </div>
+      </div>
+    </div>
+
+    <div id="listing-options-container">
+      <div v-if="data.madeByMe === true">
+        <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.data.id)" />
       </div>
     </div>
   </div>
 </template>
   
 <script>
+import DeleteButton from './DeleteButton.vue';
+
 export default {
   name: 'HouseListing',
+  components: {
+    DeleteButton
+  },
   props: ['data']
 }
 </script>
@@ -45,7 +58,6 @@ export default {
   --font-size: 18px;
   --font-heading: 22px;
 }
-
 #container:hover {
   background-color: #C3C3C3;
 }
@@ -55,6 +67,7 @@ export default {
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 #house-image {
   width: var(--image-width);
@@ -85,11 +98,19 @@ export default {
   padding: var(--hi-padding);
   line-height: var(--li-height);
   margin-left: 20px;
+  width: 900px;
 }
 .font-body-text {
   font-size: var(--font-size);
 }
 h2 {
   font-size: var(--font-heading);
+}
+.clickable {
+  cursor: pointer;
+}
+#listing-info-container {
+  display: flex;
+  align-content: center;
 }
 </style>

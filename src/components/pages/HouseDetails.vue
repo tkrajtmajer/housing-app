@@ -7,7 +7,14 @@
         <div id="house-overview" class="el-bg-two">
           <img :src="houseDetails.image" id="house-img">
           <div id="house-info" class="font-listing-info txt-secondary">
-            <h1 class="txt-primary">{{ houseDetails.street }} {{ houseDetails.houseNr }} {{ houseDetails.houseNrAdt }}</h1>
+            <div id="vertical-section">
+              <h1 class="txt-primary">{{ houseDetails.street }} {{ houseDetails.houseNr }} {{ houseDetails.houseNrAdt }}</h1>
+              <div id="listing-options-container" class="txt-primary">
+                <div v-if="houseDetails.madeByMe === true">
+                  <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
+                </div>
+              </div>
+            </div>
             <div id="info-loc">
               <img src="../../assets/ic_location@3x.png" class="icon">
               <p id="text-loc">{{ houseDetails.postcode }} {{ houseDetails.city }}</p>
@@ -61,11 +68,13 @@
 <script>
 import HouseListing from '../elements/HouseListing.vue';
 import BackButton from '../elements/BackButton.vue';
+import DeleteButton from '../elements/DeleteButton.vue';
 
 export default {
   components: {
     HouseListing,
-    BackButton
+    BackButton,
+    DeleteButton
   },
   props: ['store', 'houseDetails']
 }
@@ -120,5 +129,13 @@ export default {
   --image-height: 120px;
   --font-size: 14px;
   --font-heading: 18px;
+}
+#vertical-section{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#listing-options-container {
+  line-height: normal;
 }
 </style>
