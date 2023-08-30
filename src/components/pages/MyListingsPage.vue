@@ -26,7 +26,6 @@ export default {
   },
   setup() {
     const store = houseStore();
-
     return { store };
   },
   data () {
