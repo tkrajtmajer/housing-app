@@ -132,7 +132,9 @@ export default {
     }
 
     onMounted(() => {
-      this.showImage(this.$data.image);
+      if(this.$data.image !== '') {
+        this.showImage(this.$data.image);
+      }
     });
   },
   methods: {

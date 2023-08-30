@@ -2,6 +2,7 @@
   <nav id="nav-bar">
     <img src="../../assets/img_logo_dtt@3x.png" alt="DTT logo" class="nav-bar-el align" id="dtt-logo"> 
     <router-link to="/houses" class="nav-bar-el font-header-menu align">Houses</router-link>
+    <router-link to="/my-listings" class="nav-bar-el font-header-menu align">My Listings</router-link>
     <router-link to="/about" class="nav-bar-el font-header-menu align">About</router-link>
   </nav>
 </template>

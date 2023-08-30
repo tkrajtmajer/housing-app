@@ -28,11 +28,6 @@ export default {
   },
   setup() {
     const store = houseStore();
-
-    if(!store.dataWasFetched) {
-      store.getHouseListings();
-    }
-
     return { store };
   },
   data () {

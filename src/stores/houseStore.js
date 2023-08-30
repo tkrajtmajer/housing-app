@@ -6,6 +6,7 @@ export const houseStore = defineStore('houseStore', {
   state: () => ({
     responseData: [],
     queriedData: [],
+    myListings: [],
     dataWasFetched: false
   }),
   getters: {
@@ -15,6 +16,7 @@ export const houseStore = defineStore('houseStore', {
     async getHouseListings() {
       this.responseData = [];
       this.queriedData = [];
+      this.myListings = [];
 
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -47,6 +49,10 @@ export const houseStore = defineStore('houseStore', {
             );
 
             this.responseData.push(house);
+
+            if(el.madeByMe) {
+              this.myListings.push(house);
+            }
           }
 
           this.queriedData = this.responseData;

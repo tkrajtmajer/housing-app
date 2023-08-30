@@ -8,12 +8,22 @@
 </template>
 
 <script>
+import { houseStore } from '@/stores/houseStore'
 import NavBar from './components/elements/NavBar.vue'
 
 export default {
   name: 'App',
   components: {
     NavBar
+  },
+  setup() {
+    const store = houseStore();
+
+    if(!store.dataWasFetched) {
+      store.getHouseListings();
+    }
+
+    return { store };
   }
 }
 </script>
