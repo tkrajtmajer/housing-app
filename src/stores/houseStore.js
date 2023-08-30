@@ -7,6 +7,7 @@ export const houseStore = defineStore('houseStore', {
     responseData: [],
     queriedData: [],
     myListings: [],
+    favoritesMap: new Map(),
     dataWasFetched: false
   }),
   getters: {
@@ -246,6 +247,20 @@ export const houseStore = defineStore('houseStore', {
       catch (error) {
         throw new PostError(error.message);
       }
+    },
+    getFavorites() {
+      console.log('getFavorites');
+      return Array.from(this.favoritesMap.values());
+    },
+    addFavorite(houseId) {
+      const house = this.responseData.find(house => house.id === houseId);
+      this.favoritesMap.set(houseId, house);
+    },
+    removeFavorite(houseId) {
+      this.favoritesMap.delete(houseId);
+    },
+    isLiked(houseId) {
+      return this.favoritesMap.has(houseId);
     }
   }
 })

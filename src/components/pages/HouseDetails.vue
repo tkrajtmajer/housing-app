@@ -97,7 +97,6 @@ export default {
   },
   created() {
     this.updateRecommendations(this.houseDetails.id);
-    console.log('pics ', this.topThreePics);
   }
 }
 </script>

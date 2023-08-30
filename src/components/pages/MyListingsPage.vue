@@ -1,7 +1,7 @@
 <template>
   <div id="my-listings">
     <div v-if="selectedHouse === null && !editListing" class="container">
-      <HouseListing class="listing-item" v-for="(data, index) in store.myListings" :key="index" :data="data" :isFavorite="store.isFavorite" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
+      <HouseListing class="listing-item" v-for="(data, index) in store.myListings" :key="index" :data="data" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
     </div>
     <div v-if="selectedHouse !== null && !editListing">
       <HouseDetails :store="store" :houseDetails="selectedHouse" @backToOverview="backToOverview" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
@@ -60,6 +60,7 @@ export default {
     },
     deleteHouse(houseId) {
       this.store.deleteListing(houseId);
+      this.backToOverview();
     },
     async editHouse(houseId) {
       this.selectedHouse = await this.store.getHouseByID(houseId);
