@@ -1,20 +1,31 @@
 <template>
   <header>
-    <NavBar/>
+    <NavBar v-if="!isMobile"/>
   </header>
   <main id="main-content">
-    <router-view></router-view>
+    <router-view :isMobile="isMobile"></router-view>
   </main>
+  <footer>
+    <br><br>
+    <NavBarMobile v-if="isMobile"/>
+  </footer>
 </template>
 
 <script>
 import { houseStore } from '@/stores/houseStore'
 import NavBar from './components/elements/NavBar.vue'
+import NavBarMobile from './components/elements/NavBarMobile.vue';
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    NavBarMobile
+  },
+  data() {
+    return {
+      isMobile: window.innerWidth <= 800, 
+    };
   },
   setup() {
     const store = houseStore();

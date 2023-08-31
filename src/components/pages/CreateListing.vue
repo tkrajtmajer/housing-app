@@ -3,7 +3,6 @@
     <img src="../../assets/ic_plus_grey@3x.png" style="display: none;" id="plus-img">
     <div id="create-listing">
       <BackButton @backToOverview="this.$emit('backToOverview')"/>
-      <br>
       <h1>{{ this.title }}</h1>
       <br><br>
       <form @submit.prevent="submitNewHouse" id="form">
@@ -321,5 +320,21 @@ input[type=number] {
   border-radius: 10px; 
   object-fit: cover; 
   object-position: left;
+}
+@media (max-width: 800px) {
+  form{
+    width: 100%;
+    padding-bottom: 40px;
+  }
+  h1 {
+    text-align: center;
+  }
+  #container-create-new {
+    padding: 40px;
+  }
+  #back-menu {
+    padding: 0;
+    padding-top: 40px;
+  }
 }
 </style>

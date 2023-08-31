@@ -2,9 +2,12 @@
   <div class="container">
     <div class="vertical-section">
       <h1>Houses</h1>
-      <button class="el-primary font-buttons button-basic" @click="this.$emit('createNewListing')">
+      <button v-if="!isMobile" class="el-primary font-buttons button-basic" @click="this.$emit('createNewListing')">
         <img src="../../assets/ic_plus_white@3x.png" class="align icon"> 
         <span class="align">CREATE NEW</span>
+      </button>
+      <button v-if="isMobile" id="add-house-mobile" class="button-basic" @click="this.$emit('createNewListing')">
+        <img src="../../assets/ic_plus_grey@3x.png" class="align icon">
       </button>
     </div>
     <br><br>
@@ -38,7 +41,7 @@ export default {
     EmptySearch,
     SortOptions
   },
-  props: ['store'],
+  props: ['store', 'isMobile'],
   data() {
     return {
       updateNrResults: false,
@@ -89,5 +92,25 @@ export default {
   border-radius: 10px;
   cursor: pointer;
   padding: 15px 20px 15px 20px;
+}
+@media (max-width: 800px) {
+  .vertical-section {
+    display: inline;
+    width: 100%;
+    text-align: center;
+  }
+  .button-basic {
+    background: none;
+  }
+  #add-house-mobile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+  }
+  .icon {
+    width: auto;
+    max-height: 20px;
+  }
 }
 </style>

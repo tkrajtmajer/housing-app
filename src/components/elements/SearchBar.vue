@@ -49,4 +49,10 @@ export default {
 .button-basic {
   background: none;
 }
+@media (max-width: 800px) {
+  #search-bar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div id="my-listings">
+    <h1 v-if="isMobile">My Listings</h1>
     <div v-if="selectedHouse === null && !editListing" class="container">
       <HouseListing class="listing-item" v-for="(data, index) in store.myListings" :key="index" :data="data" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
     </div>
@@ -36,6 +37,7 @@ export default {
       editListing: false
     }
   },
+  props: ['isMobile'],
   methods: {
     async showHouseDetails(houseId) {
       const house = await this.store.getHouseByID(houseId);
@@ -88,5 +90,11 @@ export default {
   border-radius: 10px;
   cursor: pointer;
   padding: 15px 20px 15px 20px;
+}
+@media (max-width: 800px) {
+  h1 {
+    text-align: center;
+    padding-top: 30px;
+  }
 }
 </style>
