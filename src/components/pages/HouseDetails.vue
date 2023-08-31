@@ -61,7 +61,7 @@
         <h2>Recommended for you</h2>
         <br>
         <div class="recommendation-items">
-          <HouseListing class="recommendation-item" v-for="(data, index) in store.queriedData.slice(0, 3)" :key="index" :data="data" @listingSelected="this.$emit('listingSelected', data.id)"/>
+          <HouseListing class="recommendation-item" v-for="(data, index) in this.topThreePics" :key="index" :data="data" @listingSelected="listingSelected(data.id)"/>
         </div>
       </div>
     </div>
@@ -72,6 +72,7 @@
 import HouseListing from '../elements/HouseListing.vue';
 import BackButton from '../elements/BackButton.vue';
 import DeleteButton from '../elements/DeleteButton.vue';
+import { getTopRecommendations } from '../../common/recommendationSystem';
 
 export default {
   components: {
@@ -79,7 +80,24 @@ export default {
     BackButton,
     DeleteButton
   },
-  props: ['store', 'houseDetails']
+  props: ['store', 'houseDetails'],
+  data() {
+    return {
+      topThreePics: []
+    }
+  },
+  methods: {
+    listingSelected(id) {
+      this.$emit('listingSelected', id);
+      this.updateRecommendations(id);
+    },
+    updateRecommendations(id) {
+      this.topThreePics = getTopRecommendations(this.store.responseData, id);
+    }
+  },
+  created() {
+    this.updateRecommendations(this.houseDetails.id);
+  }
 }
 </script>
 

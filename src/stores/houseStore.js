@@ -6,6 +6,8 @@ export const houseStore = defineStore('houseStore', {
   state: () => ({
     responseData: [],
     queriedData: [],
+    myListings: [],
+    favoritesMap: new Map(),
     dataWasFetched: false
   }),
   getters: {
@@ -15,6 +17,7 @@ export const houseStore = defineStore('houseStore', {
     async getHouseListings() {
       this.responseData = [];
       this.queriedData = [];
+      this.myListings = [];
 
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -47,6 +50,10 @@ export const houseStore = defineStore('houseStore', {
             );
 
             this.responseData.push(house);
+
+            if(el.madeByMe) {
+              this.myListings.push(house);
+            }
           }
 
           this.queriedData = this.responseData;
@@ -240,6 +247,20 @@ export const houseStore = defineStore('houseStore', {
       catch (error) {
         throw new PostError(error.message);
       }
+    },
+    getFavorites() {
+      console.log('getFavorites');
+      return Array.from(this.favoritesMap.values());
+    },
+    addFavorite(houseId) {
+      const house = this.responseData.find(house => house.id === houseId);
+      this.favoritesMap.set(houseId, house);
+    },
+    removeFavorite(houseId) {
+      this.favoritesMap.delete(houseId);
+    },
+    isLiked(houseId) {
+      return this.favoritesMap.has(houseId);
     }
   }
 })

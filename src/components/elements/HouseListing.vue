@@ -1,5 +1,7 @@
 <template>
   <div id="container">
+    <img src="../../assets/ic_heart.png" style="display: none;" id="heart-red">
+    <img src="../../assets/ic_heart_gray.png" style="display: none;" id="heart-gray">
     <div id="listing-info-container">
       <div id="house-image">
         <img :src="data.image" alt="House image">
@@ -36,23 +38,62 @@
         <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.data.id)" />
       </div>
     </div>
+
+    <div v-if="data.madeByMe === false">
+      <button @click="likeHouse" class="button-basic">
+        <img :src="isLiked ? redHeart : grayHeart" class="icon-big" id="heart">
+      </button>
+    </div>
   </div>
 </template>
   
 <script>
+import { houseStore } from '@/stores/houseStore'
 import DeleteButton from './DeleteButton.vue';
+import redHeart from '../../assets/ic_heart.png';
+import grayHeart from '../../assets/ic_heart_gray.png';
 
 export default {
   name: 'HouseListing',
   components: {
     DeleteButton
   },
-  props: ['data']
+  props: ['data'],
+  data() {
+    return {
+      isLiked: false,
+      redHeart,
+      grayHeart
+    }
+  },
+  setup() {
+    const store = houseStore();
+    return { store };
+  },
+  created() {
+    if(this.store.isLiked(this.data.id)) {
+      this.isLiked = true;
+    }
+    else {
+      this.isLiked = false;
+    }
+  },
+  methods: {
+    likeHouse() {
+      if (this.isLiked) {
+        this.store.removeFavorite(this.data.id);
+        this.isLiked = false;
+      }
+      else {
+        this.store.addFavorite(this.data.id);
+        this.isLiked = true;
+      }
+    }
+  }
 }
 </script>
   
 <style scoped>
-/* temp */
 :root {
   --hi-padding: 10px;
   --li-height: 35px;
@@ -101,7 +142,7 @@ export default {
   padding: var(--hi-padding);
   line-height: var(--li-height);
   margin-left: 20px;
-  width: 900px;
+  width: 800px;
 }
 .font-body-text {
   font-size: var(--font-size);

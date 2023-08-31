@@ -1,28 +1,26 @@
 <template>
-  <div id="houses-page" >
-    <div v-if="selectedHouse === null && !createNewHouse">
-      <HousesOverview :store="store" @listingSelected="showHouseDetails" @createNewListing="createNew" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
+  <div id="favorites">
+    <div v-if="selectedHouse === null && !editListing" class="container">
+      <HouseListing class="listing-item" v-for="(data, index) in store.getFavorites()" :key="index" :data="data" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
     </div>
-    <div v-if="selectedHouse !== null && !createNewHouse">
+    <div v-if="selectedHouse !== null && !editListing">
       <HouseDetails :store="store" :houseDetails="selectedHouse" @backToOverview="backToOverview" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
     </div>
-    <div v-if="createNewHouse">
+    <div v-if="editListing">
       <CreateListing :store="store" :title="title" :button="button" :initialData="selectedHouse" @backToOverview="backToOverview" @processForm="addNewListing"/>
     </div>
-    <!-- <HouseDetails :store="store" :houseDetails="tempHouse"></HouseDetails> -->
   </div>
 </template>
 
 <script>
 import { houseStore } from '@/stores/houseStore'
-import HousesOverview from './HousesOverview.vue'
+import HouseListing from '../elements/HouseListing.vue'
 import HouseDetails from './HouseDetails.vue'
 import CreateListing from './CreateListing.vue'
-import House from '@/models/House';
 
 export default {
   components: {
-    HousesOverview,
+    HouseListing,
     HouseDetails,
     CreateListing
   },
@@ -33,10 +31,8 @@ export default {
   data () {
     return {
       selectedHouse: null,
-      createNewHouse: false,
-      tempHouse: new House(1, null, 'Dolina', 13, null, 10000, 71000, 'Sarajevo', 2, 1, 100, 1970, false),
-      title: '',
-      button: '',
+      title: 'Edit listing',
+      button: 'SAVE',
       editListing: false
     }
   },
@@ -51,29 +47,16 @@ export default {
     },
     backToOverview() {
       this.selectedHouse = null;
-      this.createNewHouse = false;
-      this.store.handleSearch('');
+      this.editListing = false;
       window.scrollTo({ 
         top: 0,
         behavior: 'smooth'
       });
     },
-    createNew() {
-      this.createNewHouse = true;
-      this.title = 'Create new listing';
-      this.button = 'POST';
-      this.editListing = false;
-    },
     async addNewListing({listingData, imageData}) {
-      if(this.editListing) {
-        const edittedId = await this.store.editListing(this.selectedHouse.id, listingData, imageData);
-        this.selectedHouse = await this.store.getHouseByID(edittedId);
-      }
-      else {
-        const createdId = await this.store.createNewListing(listingData, imageData);
-        this.selectedHouse = await this.store.getHouseByID(createdId);
-      }
-      this.createNewHouse = false;
+      const edittedId = await this.store.editListing(this.selectedHouse.id, listingData, imageData);
+      this.selectedHouse = await this.store.getHouseByID(edittedId);
+      this.editListing = false;
     },
     deleteHouse(houseId) {
       this.store.deleteListing(houseId);
@@ -81,11 +64,29 @@ export default {
     },
     async editHouse(houseId) {
       this.selectedHouse = await this.store.getHouseByID(houseId);
-      this.title = 'Edit listing';
-      this.button = 'SAVE';
-      this.createNewHouse = true;
       this.editListing = true;
     }
   }
 }
 </script>
+
+<style scoped>
+#listings {
+  margin-top: 30px;
+}
+.listing-item {
+  --hi-padding: 20px;
+  --li-height: 35px;
+  --image-width: 200px;
+  --image-height: 200px;
+  --font-size: 20px;
+  --font-heading: 22px;
+}
+.button-basic {
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 15px 20px 15px 20px;
+}
+</style>
