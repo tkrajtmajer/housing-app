@@ -1,6 +1,7 @@
 <template>
   <button @click="showAlert" class="button-basic">
-    <img src="../../assets/ic_delete@3x.png" class="icon-big">
+    <img v-if="!isMobile" src="../../assets/ic_delete@3x.png" class="icon-big">
+    <img v-if="isMobile" src="../../assets/ic_delete_white@3x.png" class="icon-big">
   </button>
   <div v-if="this.alertIsVisible === true">
     <DeleteAlert @confirmDeletion="deleteHouse" @cancelDeletion="hideAlert" />
@@ -14,6 +15,7 @@ export default {
   components: {
     DeleteAlert
   },
+  props: ['isMobile'],
   data() {
     return {
       alertIsVisible: false

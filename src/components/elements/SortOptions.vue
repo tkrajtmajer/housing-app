@@ -39,4 +39,12 @@ export default {
 #right {
   border-radius: 0 10px 10px 0;
 }
+@media (max-width: 800px) {
+  #sort-options {
+    width: 100%;
+  }
+  .button-basic {
+    width: 50%;
+  }
+}
 </style>

@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #nav-bar {
   position: fixed;
   top: 0;

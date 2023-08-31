@@ -1,7 +1,5 @@
 <template>
   <div id="container">
-    <img src="../../assets/ic_heart.png" style="display: none;" id="heart-red">
-    <img src="../../assets/ic_heart_gray.png" style="display: none;" id="heart-gray">
     <div id="listing-info-container">
       <div id="house-image">
         <img :src="data.image" alt="House image">
@@ -164,5 +162,25 @@ h2 {
 .button-basic {
   background: none;
   float: right;
+}
+@media (max-width: 800px) {
+  #house-info {
+    width: auto;
+    padding: 5px;
+    line-height: 25px;
+  }
+  .font-body-text {
+    font-size: 12px;
+  }
+  h2 {
+    font-size: 14px;
+  }
+  #house-image {
+    width: 110px;
+    height: 110px;
+  }
+  #listing-options-container {
+    gap: 2px;
+  }
 }
 </style>

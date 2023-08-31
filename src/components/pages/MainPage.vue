@@ -1,7 +1,7 @@
 <template>
   <div id="houses-page" >
     <div v-if="selectedHouse === null && !createNewHouse">
-      <HousesOverview :store="store" @listingSelected="showHouseDetails" @createNewListing="createNew" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
+      <HousesOverview :store="store" :isMobile="isMobile" @listingSelected="showHouseDetails" @createNewListing="createNew" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
     </div>
     <div v-if="selectedHouse !== null && !createNewHouse">
       <HouseDetails :store="store" :houseDetails="selectedHouse" @backToOverview="backToOverview" @listingSelected="showHouseDetails" @deleteHouse="deleteHouse" @editHouse="editHouse"/>
@@ -9,7 +9,6 @@
     <div v-if="createNewHouse">
       <CreateListing :store="store" :title="title" :button="button" :initialData="selectedHouse" @backToOverview="backToOverview" @processForm="addNewListing"/>
     </div>
-    <!-- <HouseDetails :store="store" :houseDetails="tempHouse"></HouseDetails> -->
   </div>
 </template>
 
@@ -18,7 +17,6 @@ import { houseStore } from '@/stores/houseStore'
 import HousesOverview from './HousesOverview.vue'
 import HouseDetails from './HouseDetails.vue'
 import CreateListing from './CreateListing.vue'
-import House from '@/models/House';
 
 export default {
   components: {
@@ -34,12 +32,12 @@ export default {
     return {
       selectedHouse: null,
       createNewHouse: false,
-      tempHouse: new House(1, null, 'Dolina', 13, null, 10000, 71000, 'Sarajevo', 2, 1, 100, 1970, false),
       title: '',
       button: '',
       editListing: false
     }
   },
+  props: ['isMobile'],
   methods: {
     async showHouseDetails(houseId) {
       const house = await this.store.getHouseByID(houseId);

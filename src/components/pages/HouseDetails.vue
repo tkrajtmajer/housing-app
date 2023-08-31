@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <BackButton @backToOverview="this.$emit('backToOverview')"/>
-    <br>
+    <BackButton :inOverview="true" @backToOverview="this.$emit('backToOverview')"/>
     <div id="overview">
       <div id="overview-left">
         <div id="house-overview" class="el-bg-two">
@@ -12,9 +11,10 @@
               <div v-if="houseDetails.madeByMe === true">
                 <div id="listing-options-container" class="txt-primary">
                   <button @click="this.$emit('editHouse', this.houseDetails.id)" class="button-basic">
-                    <img src="../../assets/ic_edit@3x.png" class="icon-big">
+                    <img v-if="!isMobile" src="../../assets/ic_edit@3x.png" class="icon-big">
+                    <img v-if="isMobile" src="../../assets/ic_edit_white@3x.png" class="icon-big">
                   </button>
-                  <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
+                  <DeleteButton :isMobile="isMobile" @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
                 </div>
               </div>
             </div>
@@ -83,6 +83,7 @@ export default {
   props: ['store', 'houseDetails'],
   data() {
     return {
+      isMobile: window.innerWidth <= 800, 
       topThreePics: []
     }
   },
@@ -105,6 +106,7 @@ export default {
 #overview {
   display: grid;
   grid-template-columns: 63% 37%;
+  padding-top: 20px;
 }
 #overview-left {
   margin-right: 50px;
@@ -132,7 +134,6 @@ export default {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  /* gap: 5px; */
 }
 #info-house-details,
 #info-room-details {
@@ -164,5 +165,49 @@ export default {
 }
 .button-basic {
   background: none;
+}
+@media (max-width: 800px) {
+  #overview {
+    display: inline;
+    padding: 0;
+  }
+  #overview-left,
+  #overview-right {
+    margin: 0;
+  }
+  #overview-right {
+    padding: 30px;
+  }
+  #hosue-overview {
+    position: relative;
+  }
+  #house-img {
+    z-index: -1;
+    position: relative;
+  }
+  #house-info {
+    margin-top: -50px;
+    background-color: #FFF;
+    z-index: 1;
+    border-radius: 30px 30px 0 0 ;
+    padding-bottom: 20px;
+    line-height: 30px;
+  }
+  .el-bg-two {
+    background: none;
+  }
+  #info-further {
+    padding: 20px 0 0 0;
+    line-height: 20px;
+  }
+  .container {
+    padding: 0;
+  }
+  #listing-options-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 35px 40px;
+  }
 }
 </style>

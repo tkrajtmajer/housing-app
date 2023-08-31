@@ -133,3 +133,48 @@ h2 {
 .container {
   padding: 150px 330px 50px 330px;
 }
+
+@media (max-width: 800px) {
+  .container {
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .icon-big {
+    width: auto;
+    max-height: 22px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 14px;
+  }
+  .font-buttons {
+    font-size: 12px;
+  }
+  .font-input-field-title {
+    font-size: 12px;
+  }
+  .font-error-message {
+    font-size: 12px;
+  }
+  .font-listing-info {
+    font-size: 12px;
+  }
+  .font-body-text {
+    font-size: 12px;
+  }
+  .font-input-field {
+    font-size: 12px;
+  }
+  .icon {
+    width: auto;
+    max-height: 12px;
+    margin-right: 10px;
+  }
+  .icon-big {
+    width: auto;
+    max-height: 18px;
+    margin-right: 10px;
+  }
+}
