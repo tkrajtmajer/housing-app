@@ -113,6 +113,9 @@ export default {
       description: ''
     }
   },
+  /**
+   * Populates the form fields with existing listing data when the component is created, if the user wants to edit a listing.
+   */
   created() {
     if(this.initialData !== null) {
       this.$data.streetName = this.initialData.street;
@@ -130,6 +133,9 @@ export default {
       this.$data.description = this.initialData.description;
     }
 
+    /**
+     * Once the component is in the DOM, displays the image that was fetched with the rest of the data in the image container on the page.
+     */
     onMounted(() => {
       if(this.$data.image !== '') {
         this.showImage(this.$data.image);
@@ -137,6 +143,9 @@ export default {
     });
   },
   methods: {
+    /**
+     * If a new house is submitted through the form, the data is processed into two FormData objects, one for the listing info and a separate one for the image that should be uploaded.
+     */
     submitNewHouse() {
       const listingData = new FormData();
 
@@ -157,12 +166,22 @@ export default {
 
       this.$emit('processForm', {listingData, imageData});
     },
+    /**
+     * Gets the image file from the upload.
+     * 
+     * @param {*} event 
+     */
     handleImageUpload(event) {
       const file = event.target.files[0];
 
       this.showImage(URL.createObjectURL(file));
       this.image = file;
     },
+    /**
+     * Selected image is displayed in the form image container. 
+     * 
+     * @param {*} src 
+     */
     showImage(src) {
       document.getElementById("uploaded-image").src = src;
       document.getElementById("icon-upload").classList.replace('container-style-icon', 'container-style-upload');
@@ -174,6 +193,11 @@ export default {
       const error = document.getElementById("image-error");
       error.innerHTML = '';
     },
+    /**
+     * If an image is removed, the initial container styling is retrieved. 
+     * 
+     * @param {*} event 
+     */
     cancelImage(event) {
       event.preventDefault();
       document.getElementById("uploaded-image").src = document.getElementById("plus-img").src;
@@ -188,6 +212,11 @@ export default {
       const error = document.getElementById("image-error");
       error.innerHTML = 'Required field missing.';
     },
+    /**
+     * Checks form fields for validity, if a field is invalid the corresponding error message is displayed.
+     * 
+     * @param {*} event 
+     */
     checkForValidity(event) {
       const el = event.target;
       const error = document.getElementById(el.id + "-error");

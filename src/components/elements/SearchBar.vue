@@ -10,18 +10,29 @@
 export default {
   name: 'SearchBar',
   methods: {
+    /**
+     * Handles user clicking on the search button.
+     */
     searchWithKeyword() {
       if(document.getElementById('input-field').value !== '') {
         this.$emit('newSearch', document.getElementById('input-field').value);
         this.$emit('updateResultsCount', true);
       }
     },
+    /**
+     * Handles querying the store for a new search input, only if the input is not empty. 
+     * 
+     * @param {*} query 
+     */
     handleInput(query) {
       if(query !== '') {
         this.$emit('newSearch', query);
         this.$emit('updateResultsCount', true);
       }
     },
+    /**
+     * Handles user clicking on the delete button in the search bar, clears user input.
+     */
     clearInput() {
       document.getElementById('input-field').value = '';
       this.$emit('newSearch', '');

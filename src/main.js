@@ -8,6 +8,7 @@ import FavoritesPage from './components/pages/FavoritesPage'
 import AboutPage from './components/pages/AboutPage'
 import './mainStyle.css';
 
+// Create router routes, set '/houses' to default
 const routes = [
   { path: '/', redirect: { path: '/houses' }, component: MainPage },
   { path: '/houses', component: MainPage },
@@ -20,7 +21,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: routes
 })
-const pinia = createPinia()
+const pinia = createPinia() // Setup pinia for creating a store
 
 const app = createApp(App);
 

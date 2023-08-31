@@ -39,6 +39,9 @@ export default {
   },
   props: ['isMobile'],
   methods: {
+    /**
+     * Toggles the HouseDetails component to be in the main view of the page. 
+     */
     async showHouseDetails(houseId) {
       const house = await this.store.getHouseByID(houseId);
       this.selectedHouse = house;
@@ -47,6 +50,9 @@ export default {
         behavior: 'smooth'
       });
     },
+    /**
+     * Toggles the HousesOverview component to be in the main view of the page. 
+     */
     backToOverview() {
       this.selectedHouse = null;
       this.createNewHouse = false;
@@ -56,12 +62,18 @@ export default {
         behavior: 'smooth'
       });
     },
+    /**
+     * Toggles the CreateListing component to be in the main view of the page. 
+     */
     createNew() {
       this.createNewHouse = true;
       this.title = 'Create new listing';
       this.button = 'POST';
       this.editListing = false;
     },
+    /**
+     * Accepts FormData from the CreateListing component, a new house listing is added through the store.
+     */
     async addNewListing({listingData, imageData}) {
       if(this.editListing) {
         const edittedId = await this.store.editListing(this.selectedHouse.id, listingData, imageData);
@@ -77,6 +89,9 @@ export default {
       this.store.deleteListing(houseId);
       this.backToOverview();
     },
+    /**
+     * Toggles the CreateListing component to be in the main view of the page. The page will display text for editing an existing listing and will populate the form with existing listing data.
+     */
     async editHouse(houseId) {
       this.selectedHouse = await this.store.getHouseByID(houseId);
       this.title = 'Edit listing';

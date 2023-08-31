@@ -64,10 +64,16 @@ export default {
       grayHeart
     }
   },
+  /**
+   * Creates a reference to the store. Here the store is used to keep track of favorited items.
+   */
   setup() {
     const store = houseStore();
     return { store };
   },
+  /**
+   * Checks the store for whether an item was added to the favorites list once it is created.
+   */
   created() {
     if(this.store.isLiked(this.data.id)) {
       this.isLiked = true;

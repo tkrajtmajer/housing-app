@@ -92,6 +92,11 @@ export default {
       this.$emit('listingSelected', id);
       this.updateRecommendations(id);
     },
+    /**
+     * Updates the top three recommendations based on the selected house.
+     * 
+     * @param {*} id selected house id
+     */
     updateRecommendations(id) {
       this.topThreePics = getTopRecommendations(this.store.responseData, id);
     }

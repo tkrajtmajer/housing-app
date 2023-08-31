@@ -52,6 +52,11 @@ export default {
     sortByOption({option, order}) {
       this.store.sortByOption({option, order});
     },
+    /**
+     * Handles the results of querying the store, if there are results the number of results are displayed, else the EmptySearch component is displayed.
+     * 
+     * @param {*} query 
+     */
     handleSearch(query) {
       this.store.handleSearch(query);
       if(this.store.getNrOfResults === 0) {
@@ -61,9 +66,19 @@ export default {
         this.noResults = false;
       }
     },
+    /**
+     * Flag for whether the number of search results should be displayed.
+     * 
+     * @param {*} flag 
+     */
     updateCounter(flag) {
       this.updateNrResults = flag;
     },
+    /**
+     * Handles deleting a house in the store.
+     * 
+     * @param {*} houseId 
+     */
     deleteHouse(houseId) {
       this.store.deleteListing(houseId);
     },

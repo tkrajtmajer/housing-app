@@ -1,19 +1,22 @@
 import { defineStore } from 'pinia'
 import House from '../models/House'
-import { GetError, QueryUndefinedError, PostError } from '@/common/errors';
+import { GetError, QueryUndefinedError, PostError, DeleteError } from '@/common/errors';
 
 export const houseStore = defineStore('houseStore', {
   state: () => ({
-    responseData: [],
-    queriedData: [],
-    myListings: [],
-    favoritesMap: new Map(),
-    dataWasFetched: false
+    responseData: [], // data gotten by fetching all the existing listings in the database
+    queriedData: [], // queried data from a user search
+    myListings: [], // listings that were created by the user
+    favoritesMap: new Map(), // favorited listings
+    dataWasFetched: false // checks if data was fetched once at the start of the application
   }),
   getters: {
-    getNrOfResults: (state) => state.queriedData.length
+    getNrOfResults: (state) => state.queriedData.length // used in the main page, as a shorthand for displaying the number of results
   },
   actions: {
+    /**
+     * Gets all the house lisings from the database. A House object is used as a model for the data. 
+     */
     async getHouseListings() {
       this.responseData = [];
       this.queriedData = [];
@@ -33,7 +36,7 @@ export const houseStore = defineStore('houseStore', {
           const data = await response.json();
        
           for(const el of data) {
-            // process the data into separate house objects
+            // Process the data into separate house objects
             const house = new House(
               el.id, 
               el.image, 
@@ -58,7 +61,8 @@ export const houseStore = defineStore('houseStore', {
 
           this.queriedData = this.responseData;
           this.dataWasFetched = true;
-        } else {
+        } 
+        else {
           throw new GetError(response.statusText);
         }
       }
@@ -66,6 +70,9 @@ export const houseStore = defineStore('houseStore', {
         throw new GetError(error.message);
       }
     },
+    /**
+     * Gets a specific listing based on its id.
+     */
     async getHouseByID(id) {
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -100,7 +107,8 @@ export const houseStore = defineStore('houseStore', {
           );
         
           return house;
-        } else {
+        } 
+        else {
           throw new GetError(response.statusText);
         }
       }
@@ -108,6 +116,11 @@ export const houseStore = defineStore('houseStore', {
         throw new GetError(error.message);
       }
     },
+    /**
+     * Handles a user search query, updates queryData which is used on the main page to display the listing data.
+     * 
+     * @param {*} query 
+     */
     handleSearch(query) {
       this.queriedData = [];
     
@@ -130,6 +143,9 @@ export const houseStore = defineStore('houseStore', {
         });
       }
     },
+    /**
+     * Handles sorting the listings by a selected option and in the selected order.
+     */
     sortByOption({option, order}) {
       if(option === 'price') {
         this.queriedData.sort((a, b) => (a.price - b.price) * order);
@@ -138,6 +154,13 @@ export const houseStore = defineStore('houseStore', {
         this.queriedData.sort((a, b) => (a.size - b.size) * order);
       }
     },
+    /**
+     * Adds a new listing to the database. The image is uploaded separately.
+     * 
+     * @param {*} listingData 
+     * @param {*} imageData 
+     * @returns the id of the newly created listing
+     */
     async createNewListing(listingData, imageData) {
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -168,6 +191,13 @@ export const houseStore = defineStore('houseStore', {
         throw new PostError(error.message);
       }
     },
+    /**
+     * Uploads the listing image to the database. 
+     * 
+     * @param {*} imageData 
+     * @param {*} houseId 
+     * @returns true if the image was uploaded successfully
+     */
     async uploadImage(imageData, houseId) {
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -194,6 +224,12 @@ export const houseStore = defineStore('houseStore', {
         throw new PostError(error.message);
       }
     },
+    /**
+     * Deletes a listing from the database, based on its id.
+     * 
+     * @param {*} houseId 
+     * @returns true if the listing was removed 
+     */
     async deleteListing(houseId) {
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -211,13 +247,19 @@ export const houseStore = defineStore('houseStore', {
           return true;
         }
         else {
-          throw new PostError(response.statusText);
+          throw new DeleteError(response.statusText);
         }
       }
       catch (error) {
-        throw new PostError(error.message);
+        throw new DeleteError(error.message);
       }
     },
+    /**
+     * Edits an existing listing with the given id, using the provided listing data.
+     * 
+     * @param {*} houseId 
+     * @returns the id of the corresponding listing
+     */
     async editListing(houseId, listingData, imageData) {
       const apikey = process.env.VUE_APP_API_KEY;
       const rootApi = process.env.VUE_APP_ROOT_API;
@@ -248,17 +290,28 @@ export const houseStore = defineStore('houseStore', {
         throw new PostError(error.message);
       }
     },
+    /**
+     * Returns an array of the favorited houses.
+     */
     getFavorites() {
-      console.log('getFavorites');
       return Array.from(this.favoritesMap.values());
     },
+    /**
+     * Adds a new favorite.
+     */
     addFavorite(houseId) {
       const house = this.responseData.find(house => house.id === houseId);
       this.favoritesMap.set(houseId, house);
     },
+    /**
+     * Removes an existing favorite.
+     */
     removeFavorite(houseId) {
       this.favoritesMap.delete(houseId);
     },
+    /**
+     * Checks whether given house is in the list of favorites.
+     */
     isLiked(houseId) {
       return this.favoritesMap.has(houseId);
     }

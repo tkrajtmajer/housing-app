@@ -22,14 +22,23 @@ export default {
     }
   },    
   methods: {
+    /**
+     * Displays alert box and disables user scrolling.
+     */
     showAlert() {
       this.alertIsVisible = true;
       document.body.style.overflow = 'hidden';
     },
+    /**
+     * Hides alert box and re-enables user scrolling.
+     */
     hideAlert() {
       this.alertIsVisible = false;
       document.body.style.overflow = 'auto';
     },
+    /**
+     * Emits an event for deleting the current house listing.
+     */
     deleteHouse() {
       this.hideAlert();
       this.$emit('deleteHouse');

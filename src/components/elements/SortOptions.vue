@@ -15,6 +15,11 @@ export default {
     };
   },
   methods: {
+    /**
+     * Emits an event to sort all listings by an option and order.
+     * 
+     * @param {*} option 
+     */
     sortBy(option) {
       if(this.currentOption === option) {
         this.currentOrder *= -1;

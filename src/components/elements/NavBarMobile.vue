@@ -61,11 +61,6 @@ export default {
   display: flex;
   justify-content: space-around;
 }
-/* #nav-bar a.router-link-active,
-#nav-bar a.router-link-exact-active {
-  font-weight: 700;
-  color: #000;
-} */
 .icon {
   max-height: 25px;
 }
