@@ -1,0 +1,180 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background-color: #F6F6F6;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.font-buttons {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.font-input-field-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.font-back-button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.font-header-menu {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.font-error-message {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.font-listing-info {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.font-body-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.font-input-field {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.el-primary {
+  background-color: #EB5440;
+  color: #F6F6F6;
+}
+
+.el-secondary {
+  color: #F6F6F6;
+  background-color: #4A4B4C;
+}
+
+.el-tertiary {
+  background-color: #E8E8E8;
+}
+
+.el-tertiary-other {
+  background-color: #C3C3C3;
+  color: #F6F6F6;
+}
+
+.el-bg-one {
+  background-color: #F6F6F6;
+}
+
+.el-bg-two {
+  background-color: #FFF;
+}
+
+.txt-primary {
+  color: #000;
+}
+
+.txt-secondary {
+  color: #4A4B4C;
+}
+
+.txt-hyperlink {
+  color: #067BC2;
+}
+
+.align {
+  vertical-align: middle;
+}
+
+.button-basic {
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: auto;
+  max-height: 18px;
+  margin-right: 10px;
+}
+
+.icon-big {
+  width: auto;
+  max-height: 25px;
+  margin-right: 10px;
+}
+
+.container {
+  padding: 150px 330px 50px 330px;
+}
+
+@media (max-width: 800px) {
+  .container {
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .icon-big {
+    width: auto;
+    max-height: 22px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 14px;
+  }
+  .font-buttons {
+    font-size: 12px;
+  }
+  .font-input-field-title {
+    font-size: 12px;
+  }
+  .font-error-message {
+    font-size: 12px;
+  }
+  .font-listing-info {
+    font-size: 12px;
+  }
+  .font-body-text {
+    font-size: 12px;
+  }
+  .font-input-field {
+    font-size: 12px;
+  }
+  .icon {
+    width: auto;
+    max-height: 12px;
+    margin-right: 10px;
+  }
+  .icon-big {
+    width: auto;
+    max-height: 18px;
+    margin-right: 10px;
+  }
+}
