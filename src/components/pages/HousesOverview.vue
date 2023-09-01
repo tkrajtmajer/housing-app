@@ -100,6 +100,9 @@ export default {
   --image-height: 180px;
   --font-size: 18px;
   --font-heading: 22px;
+  --info-width: 800px;
+  --icon-size: 25px;
+  --gap: 15px;
 }
 .button-basic {
   margin: 0;

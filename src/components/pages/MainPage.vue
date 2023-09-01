@@ -75,6 +75,7 @@ export default {
      * Accepts FormData from the CreateListing component, a new house listing is added through the store.
      */
     async addNewListing({listingData, imageData}) {
+      this.createNewHouse = false;
       if(this.editListing) {
         const edittedId = await this.store.editListing(this.selectedHouse.id, listingData, imageData);
         this.selectedHouse = await this.store.getHouseByID(edittedId);
@@ -83,7 +84,6 @@ export default {
         const createdId = await this.store.createNewListing(listingData, imageData);
         this.selectedHouse = await this.store.getHouseByID(createdId);
       }
-      this.createNewHouse = false;
     },
     deleteHouse(houseId) {
       this.store.deleteListing(houseId);

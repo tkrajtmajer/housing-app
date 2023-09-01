@@ -48,6 +48,13 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --icon-size: 25px;
+}
+.icon-big {
+  max-height: var(--icon-size);
+  height: 25px;
+}
 .button-basic {
   background: none;
   float: right;

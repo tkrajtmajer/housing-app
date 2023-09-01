@@ -14,7 +14,7 @@
                     <img v-if="!isMobile" src="../../assets/ic_edit@3x.png" class="icon-big">
                     <img v-if="isMobile" src="../../assets/ic_edit_white@3x.png" class="icon-big">
                   </button>
-                  <DeleteButton :isMobile="isMobile" @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
+                  <DeleteButton id="delete-button" :isMobile="isMobile" @deleteHouse="this.$emit('deleteHouse', this.houseDetails.id)" />
                 </div>
               </div>
             </div>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import HouseListing from '../elements/HouseListing.vue';
 import BackButton from '../elements/BackButton.vue';
 import DeleteButton from '../elements/DeleteButton.vue';
@@ -102,7 +103,9 @@ export default {
     }
   },
   created() {
-    this.updateRecommendations(this.houseDetails.id);
+    onMounted(() => {
+      this.updateRecommendations(this.houseDetails.id);
+    });
   }
 }
 </script>
@@ -149,13 +152,19 @@ export default {
   width: auto;
   max-height: 20px;
 }
+.icon-big {
+  max-height: 25px
+}
 .recommendation-item {
-  --hi-padding: 5px 0 0 10px;
+  --hi-padding: 5px 0;
   --li-height: 25px;
   --image-width: 120px;
   --image-height: 120px;
-  --font-size: 14px;
-  --font-heading: 18px;
+  --font-size: 12px;
+  --font-heading: 16px;
+  --info-width: auto;
+  --icon-size: 16px;
+  --gap: 0;
 }
 #vertical-section{
   display: flex;

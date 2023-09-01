@@ -5,9 +5,9 @@
   <main id="main-content">
     <router-view :isMobile="isMobile"></router-view>
   </main>
-  <footer>
+  <footer v-if="isMobile">
     <br><br>
-    <NavBarMobile v-if="isMobile"/>
+    <NavBarMobile/>
   </footer>
 </template>
 

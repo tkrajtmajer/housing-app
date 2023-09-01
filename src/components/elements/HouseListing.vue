@@ -33,7 +33,7 @@
         <button @click="this.$emit('editHouse', this.data.id)" class="button-basic">
           <img src="../../assets/ic_edit@3x.png" class="icon-big">
         </button>
-        <DeleteButton @deleteHouse="this.$emit('deleteHouse', this.data.id)" />
+        <DeleteButton id="delete-button" @deleteHouse="this.$emit('deleteHouse', this.data.id)" />
       </div>
     </div>
 
@@ -105,6 +105,9 @@ export default {
   --image-height: 180px;
   --font-size: 18px;
   --font-heading: 22px;
+  --info-width: 800px;
+  --icon-size: 25px;
+  --gap: 15px;
 }
 #container:hover {
   background-color: #C3C3C3;
@@ -146,7 +149,7 @@ export default {
   padding: var(--hi-padding);
   line-height: var(--li-height);
   margin-left: 20px;
-  width: 800px;
+  width: var(--info-width);
 }
 .font-body-text {
   font-size: var(--font-size);
@@ -163,11 +166,17 @@ h2 {
 }
 #listing-options-container {
   display: flex;
-  gap: 15px;
+  gap: var(--gap);
 }
 .button-basic {
   background: none;
   float: right;
+}
+.icon-big {
+  max-height: var(--icon-size);
+}
+#delete-button {
+  max-height: var(--icon-size);
 }
 @media (max-width: 800px) {
   #house-info {
